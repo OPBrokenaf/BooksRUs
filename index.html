@@ -1,20 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>My Website</title>
-    <link rel="stylesheet" href="./style.css">
-    <link rel="icon" href="./favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Search</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    #search-container {
+        text-align: center;
+        margin-top: 50px;
+    }
+    #search-input {
+        padding: 10px;
+        font-size: 16px;
+        width: 300px;
+    }
+    #search-button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    #search-results {
+        margin-top: 30px;
+        text-align: left;
+    }
+    .book {
+        margin-bottom: 20px;
+    }
+</style>
 </head>
 <body>
-    <main>
+<div id="search-container">
+    <input type="text" id="search-input" placeholder="Enter book name">
+    <button id="search-button">Search</button>
+</div>
+<div id="search-results"></div>
 
-    </main>
-    <script src="index.js"></script>
-    <script>
-        fetch('https://www.googleapis.com/books/v1/volumes?q=search-terms&key=AIzaSyDkEF84iDtOxt9f-cYlwtPWKIs71I2Yjlw')
-    </script>
+<script>
+    const searchButton = document.getElementById('search-button');
+    const searchInput = document.getElementById('search-input');
+    const searchResults = document.getElementById('search-results');
+
+    searchButton.addEventListener('click', function() {
+        const searchTerm = searchInput.value.trim();
+        if (searchTerm !== '') {
+            searchBooks(searchTerm);
+        } else {
+            searchResults.innerHTML = '<p>Please enter a book name.</p>';
+        }
+    });
+
+    function searchBooks(query) {
+        const apiUrl = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}`;
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                displayBooks(data.items);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                searchResults.innerHTML = '<p>An error occurred. Please try again later.</p>';
+            });
+    }
+
+    function displayBooks(books) {
+        if (books && books.length > 0) {
+            searchResults.innerHTML = ''; // Clear previous results
+            books.forEach(book => {
+                const title = book.volumeInfo.title;
+                const authors = book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : 'Unknown Author';
+                const thumbnail = book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : 'https://via.placeholder.com/128x192?text=No+Image';
+                const description = book.volumeInfo.description ? book.volumeInfo.description : 'No description available';
+
+                const bookHTML = `
+                    <div class="book">
+                        <img src="${thumbnail}" alt="${title}" style="float: left; margin-right: 20px;">
+                        <div>
+                            <h3>${title}</h3>
+                            <p><strong>Author(s):</strong> ${authors}</p>
+                            <p>${description}</p>
+                        </div>
+                    </div>
+                `;
+                searchResults.innerHTML += bookHTML;
+            });
+        } else {
+            searchResults.innerHTML = '<p>No books found.</p>';
+        }
+    }
+</script>
 </body>
 </html>
