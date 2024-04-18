@@ -38,7 +38,8 @@
                 const authors = book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : 'Unknown Author';
                 const thumbnail = book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : 'https://via.placeholder.com/128x192?text=No+Image';
                 const description = book.volumeInfo.description ? book.volumeInfo.description : 'No description available';
-
+                const categories = book.volumeInfo.categories ? book.volumeInfo.categories : 'unknown Genre(s)';
+                
                 // generate HTML markup for each book and appending to seafch results
                 const bookHTML = `
                     <div class="book">
@@ -46,6 +47,7 @@
                         <div>
                             <h3>${title}</h3>
                             <p><strong>Author(s):</strong> ${authors}</p>
+                            <p><strong>Genre(s):</strong> ${categories}</p>
                             <p>${description}</p>
                         </div>
                     </div>
