@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up</title>
+  <link rel="stylesheet" href="style.css">
+  <header>
+    <h1><a href="index.html">BooksR'Us</a></h1>
+  </header>
+  <nav>
+    <ul>
+      <li>
+        <a href="index.html" class = "button">Home</a>
+      </li>
+      <li>
+        <a href="signup.html" class = "button">Sign up</a>
+      </li> 
+      <li>
+        <a href="login.html" class = "button">Login</a>
+      </li>
+    </ul>
+  </nav>
+<div class="row">  
+  <form id="myForm" class="col s12" >
+    <div class="row">
+      <h2 class="form-heading">Login to BooksR'Us </h2>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <input name="email" type="email" required>
+        <label for="email">Email</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <input name="password" type="password"  required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$">
+        <label for="password">Password</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <input type="submit" class="btn waves-effect waves-light blue" value="login" required/>
+      </div>
+    </div>
+
+  </form>
