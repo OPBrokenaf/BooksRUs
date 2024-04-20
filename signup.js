@@ -33,7 +33,7 @@ submit.addEventListener('click', function(event){
     // Signed up 
     const user = userCredential.user;
     alert("Account created successfully!")
-    window.location.href = "index.html";
+    window.location.href = "homepage.html";
     // ...
   })
   .catch((error) => {
